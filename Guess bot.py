@@ -13,6 +13,8 @@ import random
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
 
+MY_ID = os.getenv('MY_ID')
+
 bot = Bot(TOKEN)
 dp = Dispatcher(bot=bot)
 
@@ -107,7 +109,7 @@ async def attempt_message(mess: Message):
             users[str(mess.from_user.id)]['secret_number'] = None
             users[str(mess.from_user.id)]['games'] += 1
             users[str(mess.from_user.id)]['wins'] += 1
-            await bot.send_message(chat_id=612635111, text=str(users[str(mess.from_user.id)]) + '\n' + str(mess.from_user.first_name))
+            await bot.send_message(chat_id=MY_ID, text=str(users[str(mess.from_user.id)]) + '\n' + str(mess.from_user.first_name))
             await mess.answer('Ты угадал число! Сыграем снова?')
 
         elif int(mess.text) < users[str(mess.from_user.id)]['secret_number']:
@@ -121,7 +123,7 @@ async def attempt_message(mess: Message):
             users[str(mess.from_user.id)]['secret_number'] = None
             users[str(mess.from_user.id)]['games'] += 1
             await mess.answer('У тебя не осталось попыток. Сыграем снова?')
-            await bot.send_message(chat_id=612635111, text=str(users[str(mess.from_user.id)])+'\n'+str(mess.from_user.first_name))
+            await bot.send_message(chat_id=MY_ID, text=str(users[str(mess.from_user.id)])+'\n'+str(mess.from_user.first_name))
     else:
         await mess.answer('Мы не играем. Хочешь сыграть?')
 
